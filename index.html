@@ -15,5 +15,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script href=./script.js></script>
+    <script>
+        // enter the searched word here 
+        let country = 'South africa'
+        // this function puts the searched item into the proper syntax for the Covid-19 API
+            function searchToLow(search) {
+                let newSearch =''
+                // changes all uppercase letters to lowercase
+                search = search.toLowerCase()
+                // removes all spaces and replaces them with a -
+                for (let i = 0; i < search.length; i++) {
+                    if (search.charAt(i) === ' ') {
+                        newSearch += '-'
+                    }
+                    else {
+                        newSearch += search.charAt(i)
+                    }
+                }
+                console.log(newSearch)
+                // calls the findApi function
+                findApi(newSearch)
+            }
+
+
+            function findApi(searchWord) {
+                //code for fetching from covid19api, needs to be equipt with search bar for names, names can be changed where south-africa currently populates
+                fetch(`https://api.covid19api.com/total/country/${searchWord}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        //curently set to find most current value in the api, however this can be changed by subtracting more from data.length to get preveous info ex data.length-2 will give object data from the day befor
+                        let currentDay = data[data.length - 1]
+                        console.log(data[data.length - 1])
+                        console.log(data[data.length - 1].Confirmed)
+                        console.log(data[data.length - 1].Recovered)
+                        console.log(data[data.length - 1].Deaths)
+                    })
+}
+            searchToLow(country)
+    </script>
 </body>
 </html>
