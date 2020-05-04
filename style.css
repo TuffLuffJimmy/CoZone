@@ -1,9 +1,7 @@
-/* .brand-desktop {
-    padding-left: 30px;
-} */
+.brand-logo {
+    margin-left: 30px;
+}
 
-.googleMap {
-    height: 250px;
-    width: 90%;
-    margin: 20px 15px 30px 15px;
+input {
+    color: white;
 }
