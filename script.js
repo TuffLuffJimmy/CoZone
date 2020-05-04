@@ -1,7 +1,4 @@
 
-// enter the searched word here 
-let country = 'South africa'
-
 // this function puts the searched item into the proper syntax for the Covid-19 API
 function searchToLow(search) {
   let newSearch = ''
@@ -38,7 +35,6 @@ function findApi(searchWord) {
       console.log(data[data.length - 1].Deaths)
     })
 }
-searchToLow(country)
 
 let searchReq = ''
 
@@ -47,5 +43,7 @@ document.getElementById('searchBtn').addEventListener('click', (event) => {
   event.preventDefault()
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
+  searchToLow(searchReq)
+
 })
 
