@@ -74,3 +74,9 @@ function initMap() {
   })
 }
 
+// fetch('https://maps.googleapis.com/maps/api/js?key=AIzaSyCsMFy3Q6ukwgHcrE1-ehnSJPLppNjEJEk&callback=initMap')
+//   .then(r => r.json())
+//   .then(place => {
+//     console.log(place)
+//   })
+
