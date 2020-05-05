@@ -49,11 +49,28 @@ document.getElementById('searchBtn').addEventListener('click', (event) => {
   document.getElementById('searchContent').value = ''
 })
 
+// toggles map on and off when map tab is pressed
+let displayMap = true
+document.getElementById('showMap').addEventListener('click', (event) => {
+  event.preventDefault()
+  console.log('test map')
+  if (displayMap) {
+    console.log('true')
+    displayMap = false
+    document.getElementById('map').style.display = 'block'
+  } else {
+    console.log('false')
+    displayMap = true
+    document.getElementById('map').style.display = 'none'
+  }
+})
+
+// initializes map
 let map
 function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 8
-    })
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8
+  })
 }
 
