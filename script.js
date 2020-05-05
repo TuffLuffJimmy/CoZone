@@ -151,6 +151,7 @@ document.getElementById('showMap').addEventListener('click', (event) => {
     document.getElementById('map').style.display = 'none'
   }
 })
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 // initializes map
@@ -163,3 +164,5 @@ function initMap() {
 }
 =======
 >>>>>>> 1b4845f3fb1ea50a971bb275e87c7408905e3280
+=======
+>>>>>>> 73acfcf8e33653414368e1b9fc3f1e222bc55cf4
