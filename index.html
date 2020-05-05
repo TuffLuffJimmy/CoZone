@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-
 </head>
 <body>
 
@@ -31,7 +30,18 @@
         </div>
     </nav>
 
+
+    <div class="container">
+    </div>
+    <div id="graphs">
+        <canvas id="myChart1"></canvas>
+        <canvas id="myChart2"></canvas>
+        <canvas id="myChart3"></canvas>
+    </div>
+
+
     <div id="map" class="googleMap"></div>
+
 
     <footer class="page-footer #757575 grey darken-1">
         <div class="container">
@@ -57,9 +67,11 @@
             </div>
         </div>
     </footer>
+    <script src=https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsMFy3Q6ukwgHcrE1-ehnSJPLppNjEJEk&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsMFy3Q6ukwgHcrE1-ehnSJPLppNjEJEk&libraries=places">
     </script>
     <script src=./script.js></script>
 </body>
