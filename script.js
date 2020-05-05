@@ -151,4 +151,3 @@ document.getElementById('showMap').addEventListener('click', (event) => {
     document.getElementById('map').style.display = 'none'
   }
 })
-
