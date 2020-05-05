@@ -1,7 +1,4 @@
 
-// enter the searched word here 
-let country = 'South africa'
-
 // this function puts the searched item into the proper syntax for the Covid-19 API
 function searchToLow(search) {
   let newSearch = ''
@@ -22,7 +19,12 @@ function searchToLow(search) {
   console.log(newSearch)
   // calls the findApi function
   findApi(newSearch)
+  createChartInfo(newSearch)
 }
+
+let map
+let service
+let infoWindow
 
 
 function findApi(searchWord) {
@@ -38,7 +40,6 @@ function findApi(searchWord) {
       console.log(data[data.length - 1].Deaths)
     })
 }
-searchToLow(country)
 
 let searchReq = ''
 
@@ -47,6 +48,92 @@ document.getElementById('searchBtn').addEventListener('click', (event) => {
   event.preventDefault()
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
+  
+  searchToLow(searchReq)
+
+})
+function createChartInfo(searchWord){
+  fetch(`https://api.covid19api.com/total/country/${searchWord}`)
+    .then(r => r.json())
+    .then(data => {
+      let dateArr = []
+      let confirmedArr = []
+      let recoveredArr = []
+      let deathsArr = []
+      for (i=10;i>0;i--){
+        let currentDay = data[data.length - i]
+        dateArr.push(`${currentDay.Date}`)
+        confirmedArr.push(`${currentDay.Confirmed}`)
+        recoveredArr.push(`${currentDay.Recovered}`)
+        deathsArr.push(`${currentDay.Deaths}`)
+      }
+      console.log(dateArr)
+      console.log(confirmedArr)
+      console.log(recoveredArr)
+      console.log(deathsArr)
+      makeChart(dateArr , confirmedArr , 1)
+      makeChart(dateArr, recoveredArr , 2)
+      makeChart(dateArr, deathsArr , 3)
+    })
+}
+function makeChart(xvar, yvar, chartNum){
+  var ctx = document.getElementById(`myChart${chartNum}`).getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: xvar,
+      datasets: [{
+        label: '# of Votes',
+        data: yvar,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+
+// Links value from search input to Maps API
+    const oklahoma = new google.maps.LatLng(35, 97.092)
+    infoWindow = new google.maps.InfoWindow()
+    map = new google.maps.Map(
+      document.getElementById('map'), { center: oklahoma, zoom: 3 })
+    let request = {
+      query: `${searchReq}`,
+      fields: ['name', 'geometry'],
+    }
+    let service = new google.maps.places.PlacesService(map)
+    service.findPlaceFromQuery(request, function (results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (let i = 0; i < results.length; i++) {
+          console.log(results[i])
+        }
+        map.setCenter(results[0].geometry.location)
+      }
+    })
 })
 
 // toggles map on and off when map tab is pressed
@@ -64,12 +151,3 @@ document.getElementById('showMap').addEventListener('click', (event) => {
     document.getElementById('map').style.display = 'none'
   }
 })
-
-// initializes map
-let map
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8
-  })
-}
