@@ -48,10 +48,28 @@ document.getElementById('searchBtn').addEventListener('click', (event) => {
   event.preventDefault()
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
-  
+  // Links value from search input to Maps API
+  const oklahoma = new google.maps.LatLng(35, 97.092)
+  infoWindow = new google.maps.InfoWindow()
+  map = new google.maps.Map(
+    document.getElementById('map'), { center: oklahoma, zoom: 3 })
+  let request = {
+    query: `${searchReq}`,
+    fields: ['name', 'geometry'],
+  }
+  service = new google.maps.places.PlacesService(map)
+  service.findPlaceFromQuery(request, function (results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (let i = 0; i < results.length; i++) {
+        console.log(results[i])
+      }
+      map.setCenter(results[0].geometry.location)
+    }
+  })
   searchToLow(searchReq)
-
 })
+  // searchToLow(searchReq)
+
 function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
@@ -115,26 +133,6 @@ function makeChart(xvar, yvar, chartNum){
     }
   });
 }
-
-// Links value from search input to Maps API
-    const oklahoma = new google.maps.LatLng(35, 97.092)
-    infoWindow = new google.maps.InfoWindow()
-    map = new google.maps.Map(
-      document.getElementById('map'), { center: oklahoma, zoom: 3 })
-    let request = {
-      query: `${searchReq}`,
-      fields: ['name', 'geometry'],
-    }
-    let service = new google.maps.places.PlacesService(map)
-    service.findPlaceFromQuery(request, function (results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (let i = 0; i < results.length; i++) {
-          console.log(results[i])
-        }
-        map.setCenter(results[0].geometry.location)
-      }
-    })
-})
 
 // toggles map on and off when map tab is pressed
 let displayMap = true
