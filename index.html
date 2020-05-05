@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +10,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
 
     <nav class="nav-extended">
@@ -25,12 +23,13 @@
         </div>
         <div class="nav-content red darken-2">
             <ul class="tabs tabs-transparent">
-                <li class="tab"><a href="#test1">Map</a></li>
+                <li class="tab"id="showMap" ><a href="#test1">Map</a></li>
                 <li class="tab"><a class="active" href="#test2">Graph</a></li>
                 <li class="tab"><a href="#test4">Saved</a></li>
             </ul>
         </div>
     </nav>
+
 
     <div class="container">
     </div>
@@ -39,6 +38,11 @@
         <canvas id="myChart2"></canvas>
         <canvas id="myChart3"></canvas>
     </div>
+
+
+    <div id="map" class="googleMap"></div>
+
+
     <footer class="page-footer #757575 grey darken-1">
         <div class="container">
             <div class="row">
@@ -49,18 +53,26 @@
                 </div>
                 <div class="col l4 offset-l2 s12">
                     <!-- Links go here if needed-->
+                <h5 class="white-text">Reference Links</h5>
+                <ul>
+                    <li><a class="grey-text text-lighten-3" href="https://covid19api.com/">Covid 19 API</a></li>
+
+                </ul>
                 </div>
             </div>
         </div>
         <div class="footer-copyright">
             <div class="container">
-                © 2020 Copright CoZone
+                © 2020 Copyright CoZone
             </div>
         </div>
     </footer>
     <script src=https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsMFy3Q6ukwgHcrE1-ehnSJPLppNjEJEk&libraries=places">
+    </script>
     <script src=./script.js></script>
 </body>
-
 </html>

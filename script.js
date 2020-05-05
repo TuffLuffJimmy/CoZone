@@ -22,6 +22,10 @@ function searchToLow(search) {
   createChartInfo(newSearch)
 }
 
+let map
+let service
+let infoWindow
+
 
 function findApi(searchWord) {
   //code for fetching from covid19api, needs to be equipt with search bar for names, names can be changed where south-africa currently populates
@@ -44,6 +48,7 @@ document.getElementById('searchBtn').addEventListener('click', (event) => {
   event.preventDefault()
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
+  
   searchToLow(searchReq)
 
 })
@@ -110,3 +115,40 @@ function makeChart(xvar, yvar, chartNum){
     }
   });
 }
+
+// Links value from search input to Maps API
+    const oklahoma = new google.maps.LatLng(35, 97.092)
+    infoWindow = new google.maps.InfoWindow()
+    map = new google.maps.Map(
+      document.getElementById('map'), { center: oklahoma, zoom: 3 })
+    let request = {
+      query: `${searchReq}`,
+      fields: ['name', 'geometry'],
+    }
+    let service = new google.maps.places.PlacesService(map)
+    service.findPlaceFromQuery(request, function (results, status) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (let i = 0; i < results.length; i++) {
+          console.log(results[i])
+        }
+        map.setCenter(results[0].geometry.location)
+      }
+    })
+})
+
+// toggles map on and off when map tab is pressed
+let displayMap = true
+document.getElementById('showMap').addEventListener('click', (event) => {
+  event.preventDefault()
+  console.log('test map')
+  if (displayMap) {
+    console.log('true')
+    displayMap = false
+    document.getElementById('map').style.display = 'block'
+  } else {
+    console.log('false')
+    displayMap = true
+    document.getElementById('map').style.display = 'none'
+  }
+})
+
