@@ -68,7 +68,6 @@ document.getElementById('searchBtn').addEventListener('click', (event) => {
   })
   searchToLow(searchReq)
 })
-  // searchToLow(searchReq)
 
 function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
