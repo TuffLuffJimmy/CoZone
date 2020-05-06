@@ -96,7 +96,7 @@ function searchFunc() {
     }
   })
   searchToLow(searchReq)
-})
+}
 function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
