@@ -28,7 +28,7 @@ let map = new google.maps.Map(
   document.getElementById('map'), { center: usCenter, zoom: 3 })
 let service
 let infoWindow
-let contentString = 'Search by Country to see statistics'
+let contentString = ''
 
 // code for marker and info window
 function mapMarker() {
@@ -98,8 +98,6 @@ function searchFunc() {
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
   // Links value from search input to Maps API
-  // const oklahoma = new google.maps.LatLng(35, 97.092)
-  infoWindow = new google.maps.InfoWindow()
   map 
   let request = {
     query: `${searchReq}`,
