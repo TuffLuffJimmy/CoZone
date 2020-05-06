@@ -29,38 +29,38 @@ let map = new google.maps.Map(
 let service
 let infoWindow
 let contentString = ``
+let markerArr = []
 
 // code for marker and info window
 function mapMarker() {
   let infowindow = new google.maps.InfoWindow({
   content: contentString
-})
-let request = 
-service = new google.maps.places.PlacesService(map)
-let marker = new google.maps.Marker({
-  map: map,
-  position: map.getCenter()
-})
-// service.getDetails(request, function(place, status) {
-//   if (status === google.maps.places.PlacesServiceStatus.OK) {
-//     let marker = new google.maps.Marker({
-//       map: map,
-//       position: place.geometry.location
-//     })
-//   }
-// })
-// let marker = new google.maps.Marker({
-//   position: markerSpot,
-//   map: map,
-//   title: 'United States'
-// })
-marker.addListener('click', function () {
-  infowindow.open(map, marker)
-})
+  })
+    service = new google.maps.places.PlacesService(map)
+    let marker = new google.maps.Marker({
+      map: map,
+      // Instead of 
+      position: map.getCenter()
+  })
+    markerArr.push(marker)
+    marker.addListener('click', function () {
+      infowindow.open(map, marker)
+  })
 }
 
-
-
+// these functions all work towards deleting all previous markers, so only the new search displays
+function setMapOnAll(map) {
+  for(let i = 0; i <markerArr.length; i++) {
+    markerArr[i].setMap(map)
+  }
+}
+function clearMarkers() {
+  setMapOnAll(null)
+}
+function deleteMarkers() {
+  clearMarkers()
+  markerArr = []
+}
 
 
 function findApi(searchWord) {
@@ -94,6 +94,7 @@ function findApi(searchWord) {
       </div>
     </div>
       `
+      contentString = infoElem
       // document.getElementById('searchContent').value = ''
       document.getElementById('countryInfo').innerHTML = ''
       document.getElementById('countryInfo').append(infoElem)
@@ -127,6 +128,8 @@ function searchFunc() {
       }
       map.setCenter(results[0].geometry.location)
     }
+    deleteMarkers()
+    mapMarker()
   })
   searchToLow(searchReq)
 }
@@ -200,7 +203,6 @@ let displayMap = true
 document.getElementById('showMap').addEventListener('click', (event) => {
   event.preventDefault()
   console.log('test map')
-  mapMarker()
   if (displayMap) {
     console.log('true')
     displayMap = false
@@ -229,41 +231,41 @@ document.getElementById('showCountryInfo').addEventListener('click', (event) => 
   document.getElementById('graphs').style.display = 'none'
 })
 
-function findApi(searchWord) {
-  //code for fetching from covid19api, needs to be equipt with search bar for names, names can be changed where south-africa currently populates
-  fetch(`https://api.covid19api.com/total/country/${searchWord}`)
-    .then(r => r.json())
-    .then(data => {
-      //curently set to find most current value in the api, however this can be changed by subtracting more from data.length to get preveous info ex data.length-2 will give object data from the day befor
-      let currentDay = data[data.length - 1]
-      console.log(data[data.length - 1])
-      console.log(data[data.length - 1].Confirmed)
-      console.log(data[data.length - 1].Recovered)
-      console.log(data[data.length - 1].Deaths)
-      // Generate card with info
-      let infoElem = document.createElement('div')
-      infoElem.className = 'card'
-      infoElem.innerHTML = `
-        <div class="row">
-      <div class="col s12 m6">
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">${data[data.length - 1].Country}</span>
-            <ul>
-             <li>Cases Confirmed: ${data[data.length - 1].Confirmed}</li>
-             <li>Recovered: ${data[data.length - 1].Recovered}</li>
-             <li>Deaths: ${data[data.length - 1].Deaths}</li>
-            </ul>
-           </div>
-          </div>
-        </div>
-      </div>
-    </div>
-      `
-      contentString = infoElem
-      mapMarker()
-      // document.getElementById('searchContent').value = ''
-      document.getElementById('countryInfo').innerHTML = ''
-      document.getElementById('countryInfo').append(infoElem)
-    })
-}
+// function findApi(searchWord) {
+//   //code for fetching from covid19api, needs to be equipt with search bar for names, names can be changed where south-africa currently populates
+//   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
+//     .then(r => r.json())
+//     .then(data => {
+//       //curently set to find most current value in the api, however this can be changed by subtracting more from data.length to get preveous info ex data.length-2 will give object data from the day befor
+//       let currentDay = data[data.length - 1]
+//       console.log(data[data.length - 1])
+//       console.log(data[data.length - 1].Confirmed)
+//       console.log(data[data.length - 1].Recovered)
+//       console.log(data[data.length - 1].Deaths)
+//       // Generate card with info
+//       let infoElem = document.createElement('div')
+//       infoElem.className = 'card'
+//       infoElem.innerHTML = `
+//         <div class="row">
+//       <div class="col s12 m6">
+//         <div class="card blue-grey darken-1">
+//           <div class="card-content white-text">
+//             <span class="card-title">${data[data.length - 1].Country}</span>
+//             <ul>
+//              <li>Cases Confirmed: ${data[data.length - 1].Confirmed}</li>
+//              <li>Recovered: ${data[data.length - 1].Recovered}</li>
+//              <li>Deaths: ${data[data.length - 1].Deaths}</li>
+//             </ul>
+//            </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//       `
+//       contentString = infoElem
+//       mapMarker()
+//       // document.getElementById('searchContent').value = ''
+//       document.getElementById('countryInfo').innerHTML = ''
+//       document.getElementById('countryInfo').append(infoElem)
+//     })
+// }
