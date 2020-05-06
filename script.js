@@ -38,6 +38,30 @@ function findApi(searchWord) {
       console.log(data[data.length - 1].Confirmed)
       console.log(data[data.length - 1].Recovered)
       console.log(data[data.length - 1].Deaths)
+      
+      // Generate card with info
+      let infoElem = document.createElement('div')
+      infoElem.className = 'card'
+      infoElem.innerHTML = `
+        <div class="row">
+      <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">${data[data.length - 1].Country}</span>
+            <ul>
+             <li>Cases Confirmed: ${data[data.length - 1].Confirmed}</li>
+             <li>Recovered: ${data[data.length - 1].Recovered}</li>
+             <li>Deaths: ${data[data.length - 1].Deaths}</li>
+            </ul>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      `
+      // document.getElementById('searchContent').value = ''
+      document.getElementById('countryInfo').innerHTML = ''
+      document.getElementById('countryInfo').append(infoElem)
     })
 }
 
@@ -148,6 +172,7 @@ document.getElementById('showMap').addEventListener('click', (event) => {
     document.getElementById('map').style.display = 'none'
   }
 })
+
 // <<<<<<< HEAD
 
 // <<<<<<< HEAD
@@ -163,3 +188,4 @@ document.getElementById('showMap').addEventListener('click', (event) => {
 // >>>>>>> 1b4845f3fb1ea50a971bb275e87c7408905e3280
 // =======
 // >>>>>>> 73acfcf8e33653414368e1b9fc3f1e222bc55cf4
+=======
