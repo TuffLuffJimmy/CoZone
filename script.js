@@ -22,11 +22,29 @@ function searchToLow(search) {
   createChartInfo(newSearch)
 }
 
+// map variables
 const usCenter = new google.maps.LatLng(39.01, -98.484)
 let map = new google.maps.Map(
   document.getElementById('map'), { center: usCenter, zoom: 3 })
 let service
 let infoWindow
+let contentString = 'Search by Country to see statistics'
+
+// code for marker and info window
+function mapMarker() {
+  let infowindow = new google.maps.InfoWindow({
+  content: contentString
+})
+let marker = new google.maps.Marker({
+  position: usCenter,
+  map: map,
+  title: 'United States'
+})
+marker.addListener('click', function () {
+  infowindow.open(map, marker)
+})
+}
+
 
 
 function findApi(searchWord) {
@@ -98,22 +116,6 @@ function searchFunc() {
   })
   searchToLow(searchReq)
 }
-
-let contentString = 'Search by Country to see statistics'
-
-var infowindow = new google.maps.InfoWindow({
-  content: contentString
-})
-
-let marker = new google.maps.Marker({
-  position: usCenter,
-  map: map,
-  title: 'United States'
-})
-
-marker.addListener('click', function () {
-  infowindow.open(map, marker)
-})
 
 function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
