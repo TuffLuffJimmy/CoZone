@@ -38,7 +38,6 @@ function findApi(searchWord) {
       console.log(data[data.length - 1].Confirmed)
       console.log(data[data.length - 1].Recovered)
       console.log(data[data.length - 1].Deaths)
-      
       // Generate card with info
       let infoElem = document.createElement('div')
       infoElem.className = 'card'
@@ -68,7 +67,13 @@ function findApi(searchWord) {
 let searchReq = ''
 
 // listens for click event on search button, then passes user input into search request variable
-document.getElementById('searchBtn').addEventListener('click', (event) => {
+document.getElementById('searchBtn').addEventListener('click', (event) => { searchFunc() })
+document.getElementById('searchContent').addEventListener('keydown', function (e) {
+  if (e.keyCode === 13) {
+    searchFunc()
+  }
+})
+function searchFunc() {
   event.preventDefault()
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
@@ -92,7 +97,6 @@ document.getElementById('searchBtn').addEventListener('click', (event) => {
   })
   searchToLow(searchReq)
 })
-
 function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
@@ -101,7 +105,7 @@ function createChartInfo(searchWord){
       let confirmedArr = []
       let recoveredArr = []
       let deathsArr = []
-      for (i=10;i>0;i--){
+      for (i = 10; i > 0; i--) {
         let currentDay = data[data.length - i]
         dateArr.push(`${currentDay.Date}`)
         confirmedArr.push(`${currentDay.Confirmed}`)
@@ -112,12 +116,12 @@ function createChartInfo(searchWord){
       console.log(confirmedArr)
       console.log(recoveredArr)
       console.log(deathsArr)
-      makeChart(dateArr , confirmedArr , 1)
-      makeChart(dateArr, recoveredArr , 2)
-      makeChart(dateArr, deathsArr , 3)
+      makeChart(dateArr, confirmedArr, 1)
+      makeChart(dateArr, recoveredArr, 2)
+      makeChart(dateArr, deathsArr, 3)
     })
 }
-function makeChart(xvar, yvar, chartNum){
+function makeChart(xvar, yvar, chartNum) {
   var ctx = document.getElementById(`myChart${chartNum}`).getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
