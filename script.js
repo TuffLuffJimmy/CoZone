@@ -23,28 +23,49 @@ function searchToLow(search) {
 }
 
 // map variables
-const usCenter = new google.maps.LatLng(39.01, -98.484)
+let markerSpot = new google.maps.LatLng(39.01, -98.484)
 let map = new google.maps.Map(
-  document.getElementById('map'), { center: usCenter, zoom: 3 })
+  document.getElementById('map'), { center: markerSpot, zoom: 3 })
 let service
 let infoWindow
-let contentString = ''
+let contentString = ``
+let markerArr = []
 
 // code for marker and info window
 function mapMarker() {
   let infowindow = new google.maps.InfoWindow({
   content: contentString
-})
-let marker = new google.maps.Marker({
-  position: usCenter,
-  map: map,
-  title: 'United States'
-})
-marker.addListener('click', function () {
-  infowindow.open(map, marker)
-})
+  })
+    service = new google.maps.places.PlacesService(map)
+    let marker = new google.maps.Marker({
+      map: map,
+      // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map, since it centers on the country you query anyways
+      position: map.getCenter()
+  })
+    // This adds the marker to an array
+    markerArr.push(marker)
+    marker.addListener('click', function () {
+      infowindow.open(map, marker)
+  })
 }
 
+// Because we're not using geocoding, anytime you move the map and then search, it would create a marker at the center of the map at the time you hit enter, and then would jump to your searched location and place a map there
+// these functions all work towards deleting all previous markers, so only the one centered on the country you searched for displays
+// this first one loops through and makes an array of any markers added to the map
+function setMapOnAll(map) {
+  for(let i = 0; i <markerArr.length; i++) {
+    markerArr[i].setMap(map)
+  }
+}
+// this function helps set the markers to null
+function clearMarkers() {
+  setMapOnAll(null)
+}
+// this final function empties the entire array, so only one marker shows at a time
+function deleteMarkers() {
+  clearMarkers()
+  markerArr = []
+}
 
 
 function findApi(searchWord) {
@@ -78,6 +99,8 @@ function findApi(searchWord) {
       </div>
     </div>
       `
+      contentString = infoElem
+      mapMarker()
       // document.getElementById('searchContent').value = ''
       document.getElementById('countryInfo').innerHTML = ''
       document.getElementById('countryInfo').append(infoElem)
@@ -111,6 +134,8 @@ function searchFunc() {
       }
       map.setCenter(results[0].geometry.location)
     }
+    deleteMarkers()
+    mapMarker()
   })
   searchToLow(searchReq)
 }

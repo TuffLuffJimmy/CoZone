@@ -1,5 +1,5 @@
 .brand-logo {
-    margin-left: 30px;
+    /* margin-left: 30px; */
 }
 
 input {
@@ -7,9 +7,14 @@ input {
 }
 
 .googleMap {
-    height: 350px;
+    height: 400px;
     width: 85%;
     margin: 15px auto 15px auto;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 
 #map {
