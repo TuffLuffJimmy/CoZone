@@ -36,6 +36,30 @@ function findApi(searchWord) {
       console.log(data[data.length - 1].Confirmed)
       console.log(data[data.length - 1].Recovered)
       console.log(data[data.length - 1].Deaths)
+      
+      // Generate card with info
+      let infoElem = document.createElement('div')
+      infoElem.className = 'card'
+      infoElem.innerHTML = `
+        <div class="row">
+      <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">${data[data.length - 1].Country}</span>
+            <ul>
+             <li>Cases Confirmed: ${data[data.length - 1].Confirmed}</li>
+             <li>Recovered: ${data[data.length - 1].Recovered}</li>
+             <li>Deaths: ${data[data.length - 1].Deaths}</li>
+            </ul>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      `
+      // document.getElementById('searchContent').value = ''
+      document.getElementById('countryInfo').innerHTML = ''
+      document.getElementById('countryInfo').append(infoElem)
     })
 }
 searchToLow(country)
