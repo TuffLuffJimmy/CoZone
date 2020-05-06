@@ -38,21 +38,68 @@ function findApi(searchWord) {
       console.log(data[data.length - 1].Confirmed)
       console.log(data[data.length - 1].Recovered)
       console.log(data[data.length - 1].Deaths)
+
+      // Generate card with info
+      let infoElem = document.createElement('div')
+      infoElem.className = 'card'
+      infoElem.innerHTML = `
+        <div class="row">
+      <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">${data[data.length - 1].Country}</span>
+            <ul>
+             <li>Cases Confirmed: ${data[data.length - 1].Confirmed}</li>
+             <li>Recovered: ${data[data.length - 1].Recovered}</li>
+             <li>Deaths: ${data[data.length - 1].Deaths}</li>
+            </ul>
+           </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      `
+      // document.getElementById('searchContent').value = ''
+      document.getElementById('countryInfo').innerHTML = ''
+      document.getElementById('countryInfo').append(infoElem)
     })
 }
 
 let searchReq = ''
 
 // listens for click event on search button, then passes user input into search request variable
-document.getElementById('searchBtn').addEventListener('click', (event) => {
+document.getElementById('searchBtn').addEventListener('click', (event) => { searchFunc() })
+document.getElementById('searchContent').addEventListener('keydown', function (e) {
+  if (e.keyCode === 13) {
+    searchFunc()
+  }
+})
+function searchFunc() {
   event.preventDefault()
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
-  
+  // Links value from search input to Maps API
+  const oklahoma = new google.maps.LatLng(35, 97.092)
+  infoWindow = new google.maps.InfoWindow()
+  map = new google.maps.Map(
+    document.getElementById('map'), { center: oklahoma, zoom: 3 })
+  let request = {
+    query: `${searchReq}`,
+    fields: ['name', 'geometry'],
+  }
+  service = new google.maps.places.PlacesService(map)
+  service.findPlaceFromQuery(request, function (results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (let i = 0; i < results.length; i++) {
+        console.log(results[i])
+      }
+      map.setCenter(results[0].geometry.location)
+    }
+  })
   searchToLow(searchReq)
+}
 
-})
-function createChartInfo(searchWord){
+function createChartInfo(searchWord) {
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
     .then(data => {
@@ -60,7 +107,7 @@ function createChartInfo(searchWord){
       let confirmedArr = []
       let recoveredArr = []
       let deathsArr = []
-      for (i=10;i>0;i--){
+      for (i = 10; i > 0; i--) {
         let currentDay = data[data.length - i]
         dateArr.push(`${currentDay.Date}`)
         confirmedArr.push(`${currentDay.Confirmed}`)
@@ -71,12 +118,12 @@ function createChartInfo(searchWord){
       console.log(confirmedArr)
       console.log(recoveredArr)
       console.log(deathsArr)
-      makeChart(dateArr , confirmedArr , 1)
-      makeChart(dateArr, recoveredArr , 2)
-      makeChart(dateArr, deathsArr , 3)
+      makeChart(dateArr, confirmedArr, 1)
+      makeChart(dateArr, recoveredArr, 2)
+      makeChart(dateArr, deathsArr, 3)
     })
 }
-function makeChart(xvar, yvar, chartNum){
+function makeChart(xvar, yvar, chartNum) {
   var ctx = document.getElementById(`myChart${chartNum}`).getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
@@ -116,26 +163,6 @@ function makeChart(xvar, yvar, chartNum){
   });
 }
 
-// Links value from search input to Maps API
-    const oklahoma = new google.maps.LatLng(35, 97.092)
-    infoWindow = new google.maps.InfoWindow()
-    map = new google.maps.Map(
-      document.getElementById('map'), { center: oklahoma, zoom: 3 })
-    let request = {
-      query: `${searchReq}`,
-      fields: ['name', 'geometry'],
-    }
-    let service = new google.maps.places.PlacesService(map)
-    service.findPlaceFromQuery(request, function (results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for (let i = 0; i < results.length; i++) {
-          console.log(results[i])
-        }
-        map.setCenter(results[0].geometry.location)
-      }
-    })
-})
-
 // toggles map on and off when map tab is pressed
 let displayMap = true
 document.getElementById('showMap').addEventListener('click', (event) => {
@@ -152,3 +179,18 @@ document.getElementById('showMap').addEventListener('click', (event) => {
   }
 })
 
+document.getElementById('showMap').addEventListener('click', (event) => {
+  document.getElementById('map').style.display = 'block'
+  document.getElementById('countryInfo').style.display = 'none'
+  document.getElementById('graphs').style.display = 'none'
+})
+document.getElementById('showGraph').addEventListener('click', (event) => {
+  document.getElementById('map').style.display = 'none'
+  document.getElementById('countryInfo').style.display = 'none'
+  document.getElementById('graphs').style.display = 'block'
+})
+document.getElementById('showCountryInfo').addEventListener('click', (event) => {
+  document.getElementById('map').style.display = 'none'
+  document.getElementById('countryInfo').style.display = 'block'
+  document.getElementById('graphs').style.display = 'none'
+})

@@ -7,8 +7,19 @@ input {
 }
 
 .googleMap {
-    height: 250px; 
+    height: 250px;
     width: 85%;
     margin: 15px auto 15px auto;
+}
+
+#map {
+    display: none;
+}
+
+#countryInfo {
+    display: block;
+}
+
+#graphs {
     display: none;
 }
