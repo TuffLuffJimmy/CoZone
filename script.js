@@ -172,18 +172,21 @@ document.getElementById('showMap').addEventListener('click', (event) => {
     document.getElementById('map').style.display = 'none'
   }
 })
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-// initializes map
-let map
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8
-  })
-}
-=======
->>>>>>> 1b4845f3fb1ea50a971bb275e87c7408905e3280
-=======
->>>>>>> 73acfcf8e33653414368e1b9fc3f1e222bc55cf4
+
+document.getElementById('showMap').addEventListener('click', (event) => {
+  document.getElementById('map').style.display = 'block'
+  document.getElementById('countryInfo').style.display = 'none'
+  document.getElementById('graphs').style.display = 'none'
+})
+document.getElementById('showGraph').addEventListener('click', (event) => {
+  document.getElementById('map').style.display = 'none'
+  document.getElementById('countryInfo').style.display = 'none'
+  document.getElementById('graphs').style.display = 'block'
+})
+document.getElementById('showCountryInfo').addEventListener('click', (event) => {
+  document.getElementById('map').style.display = 'none'
+  document.getElementById('countryInfo').style.display = 'block'
+  document.getElementById('graphs').style.display = 'none'
+})
+
