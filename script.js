@@ -39,24 +39,29 @@ function mapMarker() {
     service = new google.maps.places.PlacesService(map)
     let marker = new google.maps.Marker({
       map: map,
-      // Instead of 
+      // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map, since it centers on the country you query anyways
       position: map.getCenter()
   })
+    // This adds the marker to an array
     markerArr.push(marker)
     marker.addListener('click', function () {
       infowindow.open(map, marker)
   })
 }
 
-// these functions all work towards deleting all previous markers, so only the new search displays
+// Because we're not using geocoding, anytime you move the map and then search, it would create a marker at the center of the map at the time you hit enter, and then would jump to your searched location and place a map there
+// these functions all work towards deleting all previous markers, so only the one centered on the country you searched for displays
+// this first one loops through and makes an array of any markers added to the map
 function setMapOnAll(map) {
   for(let i = 0; i <markerArr.length; i++) {
     markerArr[i].setMap(map)
   }
 }
+// this function helps set the markers to null
 function clearMarkers() {
   setMapOnAll(null)
 }
+// this final function empties the entire array, so only one marker shows at a time
 function deleteMarkers() {
   clearMarkers()
   markerArr = []
