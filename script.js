@@ -173,6 +173,7 @@ document.getElementById('showMap').addEventListener('click', (event) => {
   }
 })
 
+
 document.getElementById('showMap').addEventListener('click', (event) => {
   document.getElementById('map').style.display = 'block'
   document.getElementById('countryInfo').style.display = 'none'
@@ -188,3 +189,4 @@ document.getElementById('showCountryInfo').addEventListener('click', (event) => 
   document.getElementById('countryInfo').style.display = 'block'
   document.getElementById('graphs').style.display = 'none'
 })
+
