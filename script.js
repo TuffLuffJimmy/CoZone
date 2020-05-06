@@ -38,7 +38,6 @@ function findApi(searchWord) {
       console.log(data[data.length - 1].Confirmed)
       console.log(data[data.length - 1].Recovered)
       console.log(data[data.length - 1].Deaths)
-
       // Generate card with info
       let infoElem = document.createElement('div')
       infoElem.className = 'card'
@@ -97,9 +96,8 @@ function searchFunc() {
     }
   })
   searchToLow(searchReq)
-}
-
-function createChartInfo(searchWord) {
+})
+function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
     .then(data => {
