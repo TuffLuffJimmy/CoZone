@@ -22,7 +22,9 @@ function searchToLow(search) {
   createChartInfo(newSearch)
 }
 
-let map
+const usCenter = new google.maps.LatLng(39.01, -98.484)
+let map = new google.maps.Map(
+  document.getElementById('map'), { center: usCenter, zoom: 3 })
 let service
 let infoWindow
 
@@ -78,10 +80,9 @@ function searchFunc() {
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
   // Links value from search input to Maps API
-  const oklahoma = new google.maps.LatLng(35, 97.092)
+  // const oklahoma = new google.maps.LatLng(35, 97.092)
   infoWindow = new google.maps.InfoWindow()
-  map = new google.maps.Map(
-    document.getElementById('map'), { center: oklahoma, zoom: 3 })
+  map 
   let request = {
     query: `${searchReq}`,
     fields: ['name', 'geometry'],
@@ -97,6 +98,23 @@ function searchFunc() {
   })
   searchToLow(searchReq)
 }
+
+let contentString = 'Search by Country to see statistics'
+
+var infowindow = new google.maps.InfoWindow({
+  content: contentString
+})
+
+let marker = new google.maps.Marker({
+  position: usCenter,
+  map: map,
+  title: 'United States'
+})
+
+marker.addListener('click', function () {
+  infowindow.open(map, marker)
+})
+
 function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
