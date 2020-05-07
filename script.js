@@ -33,7 +33,9 @@ let markerArr = []
 // code for marker and info window
 function mapMarker() {
   let infowindow = new google.maps.InfoWindow({
+
   content: contentString
+
   })
   service = new google.maps.places.PlacesService(map)
   let marker = new google.maps.Marker({
@@ -41,10 +43,12 @@ function mapMarker() {
     // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
     position: map.getCenter()
   })
+
     // This adds the marker to an array so the old markers can be deleted later
     markerArr.push(marker)
     marker.addListener('click', function () {
       infowindow.open(map, marker)
+
   })
 }
 
@@ -53,6 +57,7 @@ function mapMarker() {
 // this first one loops through and makes an array of any markers added to the map
 function setMapOnAll(map) {
   for(let i = 0; i <markerArr.length; i++) {
+
     markerArr[i].setMap(map)
   }
 }
@@ -136,7 +141,9 @@ function searchFunc() {
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
   // Links value from search input to Maps API
-  map 
+
+  map
+
   let request = {
     query: `${searchReq}`,
     fields: ['name', 'geometry'],
@@ -154,6 +161,7 @@ function searchFunc() {
   })
   searchToLow(searchReq)
 }
+
 
 function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
@@ -174,19 +182,19 @@ function createChartInfo(searchWord){
       console.log(confirmedArr)
       console.log(recoveredArr)
       console.log(deathsArr)
-      makeChart(dateArr, confirmedArr, 1)
-      makeChart(dateArr, recoveredArr, 2)
-      makeChart(dateArr, deathsArr, 3)
+      makeChart(dateArr, confirmedArr, 1, 'Number of Confirmed Cases')
+      makeChart(dateArr, recoveredArr, 2, 'Number of Recoveries')
+      makeChart(dateArr, deathsArr, 3, 'Number of Deaths')
     })
 }
-function makeChart(xvar, yvar, chartNum) {
+function makeChart(xvar, yvar, chartNum, name) {
   var ctx = document.getElementById(`myChart${chartNum}`).getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: xvar,
       datasets: [{
-        label: '# of Votes',
+        label: name,
         data: yvar,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
