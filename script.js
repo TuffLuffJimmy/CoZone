@@ -99,7 +99,22 @@ function findApi(searchWord) {
       </div>
     </div>
       `
-      contentString = infoElem
+      let cardWindow = document.createElement('div')
+      cardWindow.className = 'card'
+      cardWindow.innerHTML = `
+      <div class="row">
+        <div class="col">
+          <div class="card-panel red darken-2">
+            <span class="white-text card-title">${data[data.length - 1].Country}</span>
+            <ul>
+              <li class="white-text">Cases: ${data[data.length - 1].Confirmed}</li>
+              <li class="white-text">Deaths: ${data[data.length - 1].Deaths}</i>
+            </ul>
+          </div>
+        </div>
+      </div>
+      `
+      contentString = cardWindow
       mapMarker()
       // document.getElementById('searchContent').value = ''
       document.getElementById('countryInfo').innerHTML = ''
