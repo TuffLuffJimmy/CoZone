@@ -174,19 +174,19 @@ function createChartInfo(searchWord) {
       console.log(confirmedArr)
       console.log(recoveredArr)
       console.log(deathsArr)
-      makeChart(dateArr, confirmedArr, 1)
-      makeChart(dateArr, recoveredArr, 2)
-      makeChart(dateArr, deathsArr, 3)
+      makeChart(dateArr, confirmedArr, 1, 'Number of Confirmed Cases')
+      makeChart(dateArr, recoveredArr, 2, 'Number of Recoveries')
+      makeChart(dateArr, deathsArr, 3, 'Number of Deaths')
     })
 }
-function makeChart(xvar, yvar, chartNum) {
+function makeChart(xvar, yvar, chartNum, name) {
   var ctx = document.getElementById(`myChart${chartNum}`).getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: xvar,
       datasets: [{
-        label: '# of Votes',
+        label: name,
         data: yvar,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
