@@ -22,9 +22,49 @@ function searchToLow(search) {
   createChartInfo(newSearch)
 }
 
-let map
+// map variables
+let markerSpot = new google.maps.LatLng(39.01, -98.484)
+let map = new google.maps.Map(
+  document.getElementById('map'), { center: markerSpot, zoom: 3 })
 let service
-let infoWindow
+let contentString = ``
+let markerArr = []
+
+// code for marker and info window
+function mapMarker() {
+  let infowindow = new google.maps.InfoWindow({
+    content: contentString
+  })
+  service = new google.maps.places.PlacesService(map)
+  let marker = new google.maps.Marker({
+    map: map,
+    // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
+    position: map.getCenter()
+  })
+  // This adds the marker to an array so the old markers can be deleted later
+  markerArr.push(marker)
+  marker.addListener('click', function () {
+    infowindow.open(map, marker)
+  })
+}
+
+// Because we're not using geocoding, anytime you move the map and then search, it would create an unwanted marker at the center of the map at the time you hit enter, and then would jump to your searched location and place a map there
+// these functions all work towards deleting all previous markers, so only the one centered on the country you searched for displays
+// this first one loops through and makes an array of any markers added to the map
+function setMapOnAll(map) {
+  for (let i = 0; i < markerArr.length; i++) {
+    markerArr[i].setMap(map)
+  }
+}
+// this function helps set the markers to null
+function clearMarkers() {
+  setMapOnAll(null)
+}
+// this final function empties the entire array, so only one marker shows at a time
+function deleteMarkers() {
+  clearMarkers()
+  markerArr = []
+}
 
 
 function findApi(searchWord) {
@@ -58,6 +98,24 @@ function findApi(searchWord) {
       </div>
     </div>
       `
+      // For the maps info window
+      let cardWindow = document.createElement('div')
+      cardWindow.className = 'card'
+      cardWindow.innerHTML = `
+      <div class="row">
+        <div class="col">
+          <div class="card-panel red darken-2">
+            <span class="white-text card-title">${data[data.length - 1].Country}</span>
+            <ul>
+              <li class="white-text">Cases: ${data[data.length - 1].Confirmed}</li>
+              <li class="white-text">Deaths: ${data[data.length - 1].Deaths}</i>
+            </ul>
+          </div>
+        </div>
+      </div>
+      `
+      contentString = cardWindow
+      mapMarker()
       // document.getElementById('searchContent').value = ''
       document.getElementById('countryInfo').innerHTML = ''
       document.getElementById('countryInfo').append(infoElem)
@@ -78,10 +136,7 @@ function searchFunc() {
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
   // Links value from search input to Maps API
-  const oklahoma = new google.maps.LatLng(35, 97.092)
-  infoWindow = new google.maps.InfoWindow()
-  map = new google.maps.Map(
-    document.getElementById('map'), { center: oklahoma, zoom: 3 })
+  map
   let request = {
     query: `${searchReq}`,
     fields: ['name', 'geometry'],
@@ -94,10 +149,13 @@ function searchFunc() {
       }
       map.setCenter(results[0].geometry.location)
     }
+    deleteMarkers()
+    mapMarker()
   })
   searchToLow(searchReq)
-})
-function createChartInfo(searchWord){
+}
+
+function createChartInfo(searchWord) {
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
     .then(data => {
@@ -176,6 +234,7 @@ document.getElementById('showMap').addEventListener('click', (event) => {
     document.getElementById('map').style.display = 'none'
   }
 })
+
 
 document.getElementById('showMap').addEventListener('click', (event) => {
   document.getElementById('map').style.display = 'block'
