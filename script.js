@@ -33,7 +33,9 @@ let markerArr = []
 // code for marker and info window
 function mapMarker() {
   let infowindow = new google.maps.InfoWindow({
-    content: contentString
+
+  content: contentString
+
   })
   service = new google.maps.places.PlacesService(map)
   let marker = new google.maps.Marker({
@@ -41,10 +43,12 @@ function mapMarker() {
     // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
     position: map.getCenter()
   })
-  // This adds the marker to an array so the old markers can be deleted later
-  markerArr.push(marker)
-  marker.addListener('click', function () {
-    infowindow.open(map, marker)
+
+    // This adds the marker to an array so the old markers can be deleted later
+    markerArr.push(marker)
+    marker.addListener('click', function () {
+      infowindow.open(map, marker)
+
   })
 }
 
@@ -52,7 +56,8 @@ function mapMarker() {
 // these functions all work towards deleting all previous markers, so only the one centered on the country you searched for displays
 // this first one loops through and makes an array of any markers added to the map
 function setMapOnAll(map) {
-  for (let i = 0; i < markerArr.length; i++) {
+  for(let i = 0; i <markerArr.length; i++) {
+
     markerArr[i].setMap(map)
   }
 }
@@ -136,7 +141,9 @@ function searchFunc() {
   searchReq = document.getElementById('searchContent').value
   document.getElementById('searchContent').value = ''
   // Links value from search input to Maps API
+
   map
+
   let request = {
     query: `${searchReq}`,
     fields: ['name', 'geometry'],
@@ -155,7 +162,8 @@ function searchFunc() {
   searchToLow(searchReq)
 }
 
-function createChartInfo(searchWord) {
+
+function createChartInfo(searchWord){
   fetch(`https://api.covid19api.com/total/country/${searchWord}`)
     .then(r => r.json())
     .then(data => {
