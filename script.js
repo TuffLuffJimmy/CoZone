@@ -49,7 +49,7 @@ function mapMarker() {
   })
 }
 
-// Because we're not using geocoding, anytime you move the map and then search, it would create a marker at the center of the map at the time you hit enter, and then would jump to your searched location and place a map there
+// Because we're not using geocoding, anytime you move the map and then search, it would create an unwanted marker at the center of the map at the time you hit enter, and then would jump to your searched location and place a map there
 // these functions all work towards deleting all previous markers, so only the one centered on the country you searched for displays
 // this first one loops through and makes an array of any markers added to the map
 function setMapOnAll(map) {
