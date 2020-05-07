@@ -39,10 +39,10 @@ function mapMarker() {
     service = new google.maps.places.PlacesService(map)
     let marker = new google.maps.Marker({
       map: map,
-      // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map, since it centers on the country you query anyways
+      // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
       position: map.getCenter()
   })
-    // This adds the marker to an array
+    // This adds the marker to an array so the old markers can be deleted later
     markerArr.push(marker)
     marker.addListener('click', function () {
       infowindow.open(map, marker)
@@ -99,11 +99,11 @@ function findApi(searchWord) {
       </div>
     </div>
       `
-      contentString = infoElem
-      mapMarker()
       // document.getElementById('searchContent').value = ''
       document.getElementById('countryInfo').innerHTML = ''
       document.getElementById('countryInfo').append(infoElem)
+      contentString = infoElem
+      mapMarker()
     })
 }
 
