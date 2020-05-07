@@ -34,5 +34,14 @@ input {
     left: 0;
     bottom: 0;
     width: 100%;
+}
 
+.logo {
+    font-size: 2.1rem;
+    osition: absolute;
+    color: #fff;
+    display: inline-block;
+    font-size: 2.1rem;
+    padding: 0;
+    margin-left: 25px;
 }
