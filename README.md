@@ -17,6 +17,10 @@ Faced with an unprecedented crisis the public needs tools and the latest informa
 
 ![Map And Footer](assets/map%20and%20footer.png)
 
+### Page Location
+
+https://tuffluffjimmy.github.io/CoZone/
+
 #### Credits
 
 Benjamin Roznos
