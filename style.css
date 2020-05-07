@@ -45,3 +45,8 @@ input {
 #getStarted {
     font-size: 30px
 }
+
+.links {
+    display: inline-block;
+    margin-right: 15px;
+}
