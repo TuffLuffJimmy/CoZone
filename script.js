@@ -99,11 +99,11 @@ function findApi(searchWord) {
       </div>
     </div>
       `
+      contentString = infoElem
+      mapMarker()
       // document.getElementById('searchContent').value = ''
       document.getElementById('countryInfo').innerHTML = ''
       document.getElementById('countryInfo').append(infoElem)
-      contentString = infoElem
-      mapMarker()
     })
 }
 
