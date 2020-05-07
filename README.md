@@ -23,7 +23,7 @@ https://tuffluffjimmy.github.io/CoZone/
 
 #### Credits
 
-Benjamin Roznos
-James Echternach
-Michael Tirona
-Shane Mitchell
+Benjamin Roznos  
+James Echternach  
+Michael Tirona  
+Shane Mitchell  
