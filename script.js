@@ -27,7 +27,6 @@ let markerSpot = new google.maps.LatLng(39.01, -98.484)
 let map = new google.maps.Map(
   document.getElementById('map'), { center: markerSpot, zoom: 3 })
 let service
-let infoWindow
 let contentString = ``
 let markerArr = []
 
@@ -36,11 +35,11 @@ function mapMarker() {
   let infowindow = new google.maps.InfoWindow({
   content: contentString
   })
-    service = new google.maps.places.PlacesService(map)
-    let marker = new google.maps.Marker({
-      map: map,
-      // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
-      position: map.getCenter()
+  service = new google.maps.places.PlacesService(map)
+  let marker = new google.maps.Marker({
+    map: map,
+    // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
+    position: map.getCenter()
   })
     // This adds the marker to an array so the old markers can be deleted later
     markerArr.push(marker)
@@ -99,6 +98,7 @@ function findApi(searchWord) {
       </div>
     </div>
       `
+      // For the maps info window
       let cardWindow = document.createElement('div')
       cardWindow.className = 'card'
       cardWindow.innerHTML = `
