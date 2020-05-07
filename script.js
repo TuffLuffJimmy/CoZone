@@ -89,7 +89,7 @@ function findApi(searchWord) {
       infoElem.innerHTML = `
         <div class="row">
       <div class="col s12 m6">
-        <div class="card blue-grey darken-1">
+        <div class="card card #424242 grey darken-3">
           <div class="card-content white-text">
             <span class="card-title">${data[data.length - 1].Country}</span>
             <ul>
