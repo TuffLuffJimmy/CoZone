@@ -27,7 +27,6 @@ let markerSpot = new google.maps.LatLng(39.01, -98.484)
 let map = new google.maps.Map(
   document.getElementById('map'), { center: markerSpot, zoom: 3 })
 let service
-let infoWindow
 let contentString = ``
 let markerArr = []
 
@@ -36,11 +35,11 @@ function mapMarker() {
   let infowindow = new google.maps.InfoWindow({
   content: contentString
   })
-    service = new google.maps.places.PlacesService(map)
-    let marker = new google.maps.Marker({
-      map: map,
-      // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
-      position: map.getCenter()
+  service = new google.maps.places.PlacesService(map)
+  let marker = new google.maps.Marker({
+    map: map,
+    // Instead of geocoding, the map already centers over the country you search, so this code just adds the marker to the center of the map
+    position: map.getCenter()
   })
     // This adds the marker to an array so the old markers can be deleted later
     markerArr.push(marker)
@@ -99,7 +98,23 @@ function findApi(searchWord) {
       </div>
     </div>
       `
-      contentString = infoElem
+      // For the maps info window
+      let cardWindow = document.createElement('div')
+      cardWindow.className = 'card'
+      cardWindow.innerHTML = `
+      <div class="row">
+        <div class="col">
+          <div class="card-panel red darken-2">
+            <span class="white-text card-title">${data[data.length - 1].Country}</span>
+            <ul>
+              <li class="white-text">Cases: ${data[data.length - 1].Confirmed}</li>
+              <li class="white-text">Deaths: ${data[data.length - 1].Deaths}</i>
+            </ul>
+          </div>
+        </div>
+      </div>
+      `
+      contentString = cardWindow
       mapMarker()
       // document.getElementById('searchContent').value = ''
       document.getElementById('countryInfo').innerHTML = ''
